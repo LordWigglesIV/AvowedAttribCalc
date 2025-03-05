@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style type="text/css">
+		@media only screen and (max-width: 600px) {
+  			#wrapper{
+				margin: 0 auto 0 auto;
+				width: 100%;
+				height: auto;
+				color: white;
+				background-color: #808080;
+			}
+		}
+		@media only screen and (min-width: 600px) {
+  			#wrapper{
+				margin: 0 auto 0 auto;
+				width: 25%;
+				height: 100%;
+				color: white;
+				background-color: #808080;
+			}
+		}
+		html,body{
+			width: 100%;
+			height: 100%;
+			font-family: verdana;
+			font-size: 18px;
+			margin: 0;
+			background-color: #292a2e;
+		}
+		h3{
+			text-align: center;
+			padding: 5px 10px 5px 10px;
+			margin: 0;
+		}
+		th{
+			background-color: #3d3d3d;
+			border-radius: 15px;
+		}
+		select{
+			width: 100%;
+			height: 100%;
+		}
+		table{
+			width: 100%;
+			padding: 10px;
+		}
+		td:nth-child(2){
+			text-align: right;
+		}
+		td:nth-child(3){
+			width: 50px;
+		}
+	</style>
+	<title>Avowed Attribute Calculator v1.0</title>
+</head>
+<body>
+	<div id="wrapper">
+		<h3>Avowed Attribute Calculator v1.0</h3><hr>
+		<h3>Attributes:</h3>
+		<table>
+			<tr>
+				<td>2x Attribute Points mod?</td>
+				<td colspan="2"><input type="checkbox" onchange="changeMode()"></td>
+			</tr>
+			<tr>
+				<th colspan="3">Points: <span id="points"></span></th>
+			</tr>
+			<tr>
+				<td>Level:</td>
+				<td id="level" colspan="2"></td>
+			</tr>
+			<tr>
+				<td>Might:</td>
+				<td id="might"></td>
+				<td><button onclick="changeStat('might',0)">+</button><button onclick="changeStat('might',1)">-</button></td>
+			</tr>
+			<tr>
+				<td>Constitution:</td>
+				<td id="constitution"></td>
+				<td><button onclick="changeStat('constitution',0)">+</button><button onclick="changeStat('constitution',1)">-</button></td>
+			</tr>
+			<tr>
+				<td>Dexterity:</td>
+				<td id="dexterity"></td>
+				<td><button onclick="changeStat('dexterity',0)">+</button><button onclick="changeStat('dexterity',1)">-</button></td>
+			</tr>
+			<tr>
+				<td>Perception:</td>
+				<td id="perception"></td>
+				<td><button onclick="changeStat('perception',0)">+</button><button onclick="changeStat('perception',1)">-</button></td>
+			</tr>
+			<tr>
+				<td>Intellect:</td>
+				<td id="intellect"></td>
+				<td><button onclick="changeStat('intellect',0)">+</button><button onclick="changeStat('intellect',1)">-</button></td>
+			</tr>
+			<tr>
+				<td>Resolve:</td>
+				<td id="resolve"></td>
+				<td><button onclick="changeStat('resolve',0)">+</button><button onclick="changeStat('resolve',1)">-</button></td>
+			</tr>
+		</table><hr>
+		<h3>Training:</h3>
+		<table>
+			<tr>
+				<td>Kai:</td>
+				<td>
+					<select onchange="setBonus('kai',this.value)">
+						<option value="0">None</option>
+						<option value="1">+2 Might</option>
+						<option value="2">+2 Constitution</option>
+						<option value="3">+1 Both</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Marius:</td>
+				<td>
+					<select onchange="setBonus('marius',this.value)">
+						<option value="0">None</option>
+						<option value="1">+2 Dexterity</option>
+						<option value="2">+2 Constitution</option>
+						<option value="3">+1 Both</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Giatta:</td>
+				<td>
+					<select onchange="setBonus('giatta',this.value)">
+						<option value="0">None</option>
+						<option value="1">+2 Intellect</option>
+						<option value="2">+2 Resolve</option>
+						<option value="3">+1 Both</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Yatzli:</td>
+				<td>
+					<select onchange="setBonus('yatzli',this.value)">
+						<option value="0">None</option>
+						<option value="1">+2 Perception</option>
+						<option value="2">+2 Intellect</option>
+						<option value="3">+1 Both</option>
+					</select>
+				</td>
+			</tr>
+		</table><hr>
+		<h3>Stats:</h3>
+		<table>
+			<tr><td>Damage:</td>				<td id="stat_00"></td></tr>
+			<tr><td>Carry Capacity:</td>		<td id="stat_01"></td></tr>
+			<tr><td>HP:</td>					<td id="stat_02"></td></tr>
+			<tr><td>Poison/Bleed Resist:</td>	<td id="stat_03"></td></tr>
+			<tr><td>Attack Speed:</td>			<td id="stat_04"></td></tr>
+			<tr><td>Action Speed:</td>			<td id="stat_05"></td></tr>
+			<tr><td>Crit Chance:</td>			<td id="stat_06"></td></tr>
+			<tr><td>Max Range:</td>				<td id="stat_07"></td></tr>
+			<tr><td>Max Essence:</td>			<td id="stat_08"></td></tr>
+			<tr><td>Elemental Resist:</td>		<td id="stat_09"></td></tr>
+			<tr><td>Max Stamina:</td>			<td id="stat_10"></td></tr>
+			<tr><td>Second Wind:</td>			<td id="stat_11"></td></tr>
+		</table><hr>
+	</div>
+<script type="text/javascript">
+	let stats = {
+		"level":1,
+		"points":29,
+		"pointsPerLevel":1,
+		"skillMin":0,
+		"skillMax":15,
+		"might":0,
+		"mightBonus":[0,0],
+		"dgPerMight":3,
+		"cpPerMight":10,
+		"constitution":0,
+		"constitutionBonus":[0,0],
+		"hpPerConstitution":5,
+		"pbPerConstitution":6,
+		"dexterity":0,
+		"dexterityBonus":[0,0],
+		"atPerDexterity":3.5,
+		"acPerDexterity":6.5,
+		"perception":0,
+		"perceptionBonus":[0,0],
+		"chPerPerception":2,
+		"mrPerPerception":5,
+		"intellect":0,
+		"intellectBonus":[0,0],
+		"esPerIntellect":5,
+		"erPerIntellect":6,
+		"resolve":0,
+		"resolveBonus":[0,0],
+		"msPerResolve":5,
+		"swPerResolve":11.5
+	};
+
+	let att_00 = document.getElementById('points');
+	let att_01 = document.getElementById('level');
+	let att_02 = document.getElementById('might');
+	let att_03 = document.getElementById('constitution');
+	let att_04 = document.getElementById('dexterity');
+	let att_05 = document.getElementById('perception');
+	let att_06 = document.getElementById('intellect');
+	let att_07 = document.getElementById('resolve');
+
+	let stat_00 = document.getElementById('stat_00');
+	let stat_01 = document.getElementById('stat_01');
+	let stat_02 = document.getElementById('stat_02');
+	let stat_03 = document.getElementById('stat_03');
+	let stat_04 = document.getElementById('stat_04');
+	let stat_05 = document.getElementById('stat_05');
+	let stat_06 = document.getElementById('stat_06');
+	let stat_07 = document.getElementById('stat_07');
+	let stat_08 = document.getElementById('stat_08');
+	let stat_09 = document.getElementById('stat_09');
+	let stat_10 = document.getElementById('stat_10');
+	let stat_11 = document.getElementById('stat_11');
+
+	let totalMight;
+	let totalConstitution;
+	let totalDexterity;
+	let totalPerception;
+	let totalIntellect;
+	let totalResolve;
+
+	let mode = "normal";
+
+	function setBonus(type,value) {
+		switch(type){
+			case "kai":
+				if (value == "0") { stats.mightBonus[0] = 0; stats.constitutionBonus[0] = 0; }
+				if (value == "1") { stats.mightBonus[0] = 2; stats.constitutionBonus[0] = 0; }
+				if (value == "2") { stats.mightBonus[0] = 0; stats.constitutionBonus[0] = 2; }
+				if (value == "3") { stats.mightBonus[0] = 1; stats.constitutionBonus[0] = 1; }
+			break;
+			case "marius":
+				if (value == "0") { stats.dexterityBonus[0] = 0; stats.constitutionBonus[1] = 0; }
+				if (value == "1") { stats.dexterityBonus[0] = 2; stats.constitutionBonus[1] = 0; }
+				if (value == "2") { stats.dexterityBonus[0] = 0; stats.constitutionBonus[1] = 2; }
+				if (value == "3") { stats.dexterityBonus[0] = 1; stats.constitutionBonus[1] = 1; }
+			break;
+			case "giatta":
+				if (value == "0") { stats.intellectBonus[0] = 0; stats.resolveBonus[0] = 0; }
+				if (value == "1") { stats.intellectBonus[0] = 2; stats.resolveBonus[0] = 0; }
+				if (value == "2") { stats.intellectBonus[0] = 0; stats.resolveBonus[0] = 2; }
+				if (value == "3") { stats.intellectBonus[0] = 1; stats.resolveBonus[0] = 1; }
+			break;
+			case "yatzli":
+				if (value == "0") { stats.perceptionBonus[0] = 0; stats.intellectBonus[1] = 0; }
+				if (value == "1") { stats.perceptionBonus[0] = 2; stats.intellectBonus[1] = 0; }
+				if (value == "2") { stats.perceptionBonus[0] = 0; stats.intellectBonus[1] = 2; }
+				if (value == "3") { stats.perceptionBonus[0] = 1; stats.intellectBonus[1] = 1; }
+			break;
+		}
+		calcStats();
+	}
+
+	function changeMode() {
+		if (mode == "normal") {
+			mode = "double";
+			stats = {
+				"level":1,
+				"points":58,
+				"pointsPerLevel":0.5,
+				"skillMin":0,
+				"skillMax":15,
+				"might":0,
+				"mightBonus":[0,0],
+				"dgPerMight":3,
+				"cpPerMight":10,
+				"constitution":0,
+				"constitutionBonus":[0,0],
+				"hpPerConstitution":5,
+				"pbPerConstitution":6,
+				"dexterity":0,
+				"dexterityBonus":[0,0],
+				"atPerDexterity":3.5,
+				"acPerDexterity":6.5,
+				"perception":0,
+				"perceptionBonus":[0,0],
+				"chPerPerception":2,
+				"mrPerPerception":5,
+				"intellect":0,
+				"intellectBonus":[0,0],
+				"esPerIntellect":5,
+				"erPerIntellect":6,
+				"resolve":0,
+				"resolveBonus":[0,0],
+				"msPerResolve":5,
+				"swPerResolve":11.5
+			};
+			calcStats();
+		} else {
+			mode = "normal";
+			stats = {
+				"level":1,
+				"points":29,
+				"pointsPerLevel":1,
+				"skillMin":0,
+				"skillMax":15,
+				"might":0,
+				"mightBonus":[0,0],
+				"dgPerMight":3,
+				"cpPerMight":10,
+				"constitution":0,
+				"constitutionBonus":[0,0],
+				"hpPerConstitution":5,
+				"pbPerConstitution":6,
+				"dexterity":0,
+				"dexterityBonus":[0,0],
+				"atPerDexterity":3.5,
+				"acPerDexterity":6.5,
+				"perception":0,
+				"perceptionBonus":[0,0],
+				"chPerPerception":2,
+				"mrPerPerception":5,
+				"intellect":0,
+				"intellectBonus":[0,0],
+				"esPerIntellect":5,
+				"erPerIntellect":6,
+				"resolve":0,
+				"resolveBonus":[0,0],
+				"msPerResolve":5,
+				"swPerResolve":11.5
+			};
+			calcStats();
+		}
+	}
+
+	function checkIllegalStats() {
+		if (totalMight > 15) 		{ changeStat("might",1); 		checkIllegalStats(); }
+		if (totalConstitution > 15) { changeStat("constitution",1); checkIllegalStats(); }
+		if (totalDexterity > 15) 	{ changeStat("dexterity",1); 	checkIllegalStats(); }
+		if (totalPerception > 15) 	{ changeStat("perception",1); 	checkIllegalStats(); }
+		if (totalIntellect > 15) 	{ changeStat("intellect",1); 	checkIllegalStats(); }
+		if (totalResolve > 15) 		{ changeStat("resolve",1); 		checkIllegalStats(); }
+	}
+
+	function calcStats() {
+		totalMight = stats.might + stats.mightBonus[0] + stats.mightBonus[1];
+		totalConstitution = stats.constitution + stats.constitutionBonus[0] + stats.constitutionBonus[1];
+		totalDexterity = stats.dexterity + stats.dexterityBonus[0] + stats.dexterityBonus[1];
+		totalPerception = stats.perception + stats.perceptionBonus[0] + stats.perceptionBonus[1];
+		totalIntellect = stats.intellect + stats.intellectBonus[0] + stats.intellectBonus[1];
+		totalResolve = stats.resolve + stats.resolveBonus[0] + stats.resolveBonus[1];
+
+		checkIllegalStats();
+
+		att_00.innerHTML = stats.points + " Remaining.";
+		att_01.innerHTML = Math.floor(stats.level);
+		att_02.innerHTML = totalMight;
+		att_03.innerHTML = totalConstitution;
+		att_04.innerHTML = totalDexterity;
+		att_05.innerHTML = totalPerception;
+		att_06.innerHTML = totalIntellect;
+		att_07.innerHTML = totalResolve;
+		stat_00.innerHTML = "+"+(stats.dgPerMight*totalMight)+"%";
+		stat_01.innerHTML = "+"+(stats.cpPerMight*totalMight)+"%";
+		stat_02.innerHTML = "+"+(stats.hpPerConstitution*totalConstitution)+"%";
+		stat_03.innerHTML = "+"+(stats.pbPerConstitution*totalConstitution)+"%";
+		stat_04.innerHTML = "+"+(stats.atPerDexterity*totalDexterity)+"%";
+		stat_05.innerHTML = "+"+(stats.acPerDexterity*totalDexterity)+"%";
+		stat_06.innerHTML = "+"+(stats.chPerPerception*totalPerception)+"%";
+		stat_07.innerHTML = "+"+(stats.mrPerPerception*totalPerception)+"%";
+		stat_08.innerHTML = "+"+(stats.esPerIntellect*totalIntellect);
+		stat_09.innerHTML = "+"+(stats.erPerIntellect*totalIntellect)+"%";
+		stat_10.innerHTML = "+"+(stats.msPerResolve*totalResolve);
+		stat_11.innerHTML = "+"+(stats.swPerResolve*totalResolve)+"%";
+	}
+
+	function changeStat(stat,type) {
+		if (type == 0) {
+			if ((stats[stat] + stats[stat+"Bonus"][0] + stats[stat+"Bonus"][1]) < stats.skillMax && stats.points > 0) {
+				stats.points--;
+				stats.level += stats.pointsPerLevel;
+				stats[stat]++;
+			}
+		} else {
+			if (stats[stat] > stats.skillMin) {
+				stats.points++;
+				stats.level -= stats.pointsPerLevel;
+				stats[stat]--;
+			}
+		}
+		calcStats();
+	}
+	calcStats();
+</script>
+</body>
+</html>
